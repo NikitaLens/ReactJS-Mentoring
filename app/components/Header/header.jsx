@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import './styles.scss';
 
 class Header extends Component {
-    render () {        
+    render() {
         return (
             <div className="header">
                 <div className="header-wrapper">
                     <div className="header-content">
                         <div className="logo">
-                            <a href="/"><i className="fab fa-instagram" /></a> 
+                            <a href="/"><i className="fab fa-instagram"/></a>
                             <Link to='/'>Instagram</Link>
                         </div>
-                        <input className="" type="text" placeholder="Search"></input>                            
+                        <input className="" type="text" placeholder="Search"></input>
                         <nav>
-                            <a href="#1"><i className="far fa-compass" /></a>
-                            <a href="#2"><i className="far fa-heart" /></a>
+                            <a href="#1"><i className="far fa-compass"/></a>
+                            <a href="#2"><i className="far fa-heart"/></a>
                             <Link to={'/' + this.props.currentUser.nick}>
                                 <i className="far fa-user"/>
-						    </Link>
+                            </Link>
                         </nav>
                     </div>
                 </div>
@@ -29,16 +30,12 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     let currentUser;
-    state.user.map((user, index) => {      
-        if (user.nick === state.currentUser) {
-            currentUser = user;    
-        }
+    state.user.map((user) => {
+        if (user.nick === state.currentUser) currentUser = user;
     });
 
     return {
-        photoStore: state.photo,
-        userStore: state.user,
-        currentUser: currentUser
+        currentUser
     };
 }
 

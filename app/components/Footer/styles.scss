@@ -1,0 +1,345 @@
+html,
+body {
+	box-sizing: border-box;
+	padding: 0px;
+	margin: 0px;
+	font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+	a:-webkit-any-link {
+		text-decoration: none;
+	}
+}
+
+.header {
+	background-color: #fff;
+	border-bottom: 1px solid rgba(0,0,0,.0975);
+
+	.header-wrapper {
+		display: flex;
+		max-width: 935px;
+		margin: 0 auto;
+		padding: 0 60px;
+		flex-direction: column;
+	
+		.header-content {
+			display: flex;
+			justify-content: space-between;
+			padding: 10px 0;
+			align-items: center;
+
+			.logo, .logo a {
+				color: black;
+				font-size: 24px;
+				font-weight: bold;
+
+				a:nth-child(1) {
+					padding-right: 5px;
+				}
+			}
+
+			input {
+				display: flex;
+				border: 1px solid rgba(0,0,0,.0975);				
+				border-radius: 7px;
+				flex-direction: row;
+				width: 100%;
+				max-width: 250px;
+				background: transparent;
+				outline: none;
+				text-align: center;
+				
+				&:focus {
+					background-color: rgba(197, 197, 197, 0.301);
+					border: 1px solid rgba(0, 0, 0, 0.397);
+				}
+			}			
+			
+			nav {
+				display: flex;
+				align-items: baseline;
+
+				a {
+					padding-right: 20px;
+					color: #000;
+				}
+			}
+		}
+	}
+}
+
+.main {
+	background-color: #fafafa;
+
+	.main-wrapper {
+		display: flex;
+		max-width: 935px;
+		margin: 0 auto;
+		padding: 0 60px;
+		flex-direction: column;
+	
+		.main-content {
+			display: flex;
+			padding: 20px 0;
+			min-height: calc(100vh - 112px);
+			flex-direction: column;  
+
+			.log-or-sing {
+				display: flex;
+				flex-direction: column;
+				align-items: center;			
+
+				.welcome {
+					display: flex;
+					font-size: 40px;
+					font-weight: 400;
+					margin: 25px 0;
+				}
+
+				.auth-description {
+					font-weight: 600;
+					font-size: 30px;
+				}
+
+				.log-in, .sing-up {
+					display: flex;
+					flex-direction: column;
+					padding: 25px;
+					min-width: 300px;
+
+					.input-auth {
+						input {
+							display: flex;
+							border: 1px solid rgba(0,0,0,.0975);				
+							border-radius: 7px;
+							flex-direction: row;
+							width: 100%;
+							max-width: 250px;
+							background: transparent;
+							outline: none;
+							text-align: center;
+							margin-bottom: 10px;
+							
+							&:focus {
+								background-color: rgba(197, 197, 197, 0.301);
+								border: 1px solid rgba(0, 0, 0, 0.397);
+							}
+						}
+					}					
+
+					button {
+						border: 1px solid rgba(0, 0, 0, 0.098);	
+						background-color: #3897f0;
+						color: #fff;
+						font-weight: bold;		
+						border-radius: 7px;
+					}
+				}
+
+
+			}
+
+			.profile {
+				display: flex;
+				justify-content: space-between;
+
+				.photo {
+					flex: 2;	
+					text-align: center;
+					padding: 15px 15px;
+
+					img {
+						object-fit: cover;
+						border-radius: 50%;
+						width: 150px;
+						height: 150px;	
+					}
+				}
+				
+				.info {
+					flex: 3;
+					font-size: 20px;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					margin-left: 50px;
+
+					.info-nick {						
+						display: flex;
+						font-size: 26px;
+					}
+
+					.info-count {
+						display: flex;
+						justify-content: flex-start;
+						margin: 5px 0;
+
+						.post-count {
+							display: flex;
+						}
+
+						.post-count {
+							display: flex;
+						}
+
+						.post-count {
+							display: flex;
+						}
+					}
+
+					.info-count div {
+						padding-right: 50px;
+					}
+
+					.info-fullname {						
+						display: flex;
+						font-weight: 600;
+					}
+				}
+			}
+
+			.photo-album {
+				display: flex;
+				padding-top: 25px;
+				flex-wrap: wrap;
+				justify-content: center;
+
+				.photo {
+					flex:1 1 calc(33.33% - 20px);
+					min-width: 250px;
+					box-sizing: border-box;
+					margin: 10px;
+					flex-basis: 100px;
+					justify-content: center;
+					max-width: 252px;
+
+					img {
+						object-fit: cover;	
+						height: 250px;						
+						width: 250px;
+					}
+				}
+			}
+
+			.photo-album-line {
+				display: flex;
+				padding-top: 25px;
+				flex-direction: column;
+				
+				.photo {
+					border: 1px solid rgba(197, 197, 197, 0.301);
+					background-color: #fff;
+					border-radius: 5px;
+					display: flex;
+					flex-direction: column;	
+					padding-bottom: 15px;
+					margin: 20px 0px;
+
+					a > .photo-autor {
+						color: black;
+						text-decoration: none;
+					}
+
+					.photo-autor {
+						display: flex;
+						align-items: center;	
+						padding: 15px 15px;
+		
+						img {
+							object-fit: cover;
+							border-radius: 50%;
+							width: 40px;
+							height: 40px;	
+						}	
+						
+						.nick-autor {
+							margin-left: 15px;
+							font-size: 20px;
+							font-weight: 600;
+							text-decoration: none;
+						}
+					}
+
+					img {						
+						object-fit: cover;	
+						height: 100%;						
+						width: 100%;
+					}
+
+					.photo-like {
+						display: flex;
+						padding: 15px 15px 10px 15px;
+						align-items: center;
+						cursor: pointer;
+						
+						.fa-heart {
+							color: red;
+							font-size: 24px;
+						}
+
+						.like-count {
+							margin-left: 5px;
+						}
+					}
+
+					.photo-comment {
+						display: flex;						
+						padding: 0 15px;
+						flex-direction: column;	
+						white-space: normal;
+					}
+					
+					.input-comment {
+						display: flex;
+						align-items: baseline;
+						border-bottom: 1px solid rgba(0,0,0,.0975);				
+						margin: 10px 15px 0 15px;
+						padding-left: 10px;
+
+						input {		
+							flex: 20;				
+							display: flex;
+							border: none;
+							flex-direction: row;	
+							background: transparent;
+							outline: none;
+						}	
+
+						.add-button {
+							flex: 1;
+							display: flex;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.footer {
+	background-color: #fafafa;	
+	border-top: 1px solid rgba(0,0,0,.0975);
+
+	.footer-wrapper {
+		display: flex;
+		max-width: 935px;
+		margin: 0 auto;
+		padding: 0 60px;
+		flex-direction: column;
+	
+		.footer-content {
+			display: flex;
+			justify-content: space-between;
+			padding: 15px 10px;
+
+			nav {
+				display: flex;
+				align-items: baseline;
+
+				a {
+					padding-right: 20px;
+					color: black;
+				}
+			}
+		}
+	}
+}

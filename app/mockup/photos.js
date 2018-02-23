@@ -1,21 +1,21 @@
-const initialState = [
+export default  [
 	{
-		id: '1', 
+		id: '1',
         src: 'https://pp.userapi.com/c627419/v627419118/17825/YpKDnDSOMXM.jpg',
         alt: 'nikitalens',
 		userId: '1',
 		comment: [
 			{
 				id_user: '2',
-				text: 'Круто'			
+				text: 'Круто'
 			},
 			{
 				id_user: '3',
-				text: 'Огонь!!!'			
+				text: 'Огонь!!!'
 			},
 			{
 				id_user: '4',
-				text: 'Супер'			
+				text: 'Супер'
 			}
 		],
 		likes: [ '1', '2', '3', '4', '5' ]
@@ -28,7 +28,7 @@ const initialState = [
 		comment: [
 			{
 				id_user: '2',
-				text: 'Огонь!!!'			
+				text: 'Огонь!!!'
 			},
 			{
 				id_user: '3',
@@ -129,33 +129,3 @@ const initialState = [
 		likes: [ '2', '4' ]
 	}
 ];
-
-export default function photo( state = initialState, action ) {    
-	// console.log(action);
-	// console.log(state);
-	if (action.type === 'ADD_COMMENT') {
-		state.forEach( function(item) {
-			if (item.id === action.comment.id_photo) {
-				item.comment.push(action.comment.new_comment);
-			}
-		});
-        return [
-            ...state
-        ]
-	} else if (action.type === 'PUT_LIKE') {
-		state.forEach( function(item) {
-			if (item.id === action.like.id_photo) {
-				let idDel = item.likes.indexOf(action.like.id_user);
-				if ( idDel != -1 ) {
-					item.likes.splice(idDel, 1);
-				} else {
-					item.likes.push(action.like.id_user);
-				}
-			}
-		});
-        return [
-            ...state
-        ]
-	}
-    return state;
-}

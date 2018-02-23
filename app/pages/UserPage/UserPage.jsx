@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Header from './header.jsx';
-import Footer from './footer.jsx';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 class UserPage extends Component {
     render() {
@@ -45,17 +45,16 @@ class UserPage extends Component {
     }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
-    let userPage;    
-    state.user.map((user, index) => {      
+    let userPage;
+    state.user.find((user) => {
         if (user.nick === ownProps.match.params.nick) {
-            userPage = user;    
+            userPage = user;
         }
     });
 
-    let currentPhoto = [];
-    state.photo.map((photo, index) => {
+    const currentPhoto = [];
+    state.photo.map((photo) => {
         if (photo.userId === userPage.id) {
             currentPhoto.push(photo);
         }
@@ -64,9 +63,9 @@ const mapStateToProps = (state, ownProps) => {
     return {
         photoStore: state.photo,
         userStore: state.user,
-        userPage: userPage,
-        currentPhoto: currentPhoto,
-        ownProps: ownProps
+        userPage,
+        currentPhoto,
+        ownProps
     };
 }
 

@@ -1,56 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Header from './header.jsx';
-import Footer from './footer.jsx';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
-class Comment extends Component {
-    addComment() {     
-        this.props.props.onAddComment( { id_photo: this.props.photo.id, new_comment: {id_user: this.props.props.currentUser.id, text: this.commentInput.value} } );
-        this.commentInput.value = '';
-    }
+// class Comment extends Component {
+//     addComment() {
+//         this.props.props.onAddComment( { id_photo: this.props.photo.id, new_comment: {id_user: this.props.props.currentUser.id, text: this.commentInput.value} } );
+//         this.commentInput.value = '';
+//     }
     
-    render() {        
-        return (
-            <div className="input-comment">
-                <input className="add-comment"
-                    type="text"
-                    ref={(input) => this.commentInput = input}
-                    placeholder="Input you comment..."
-                />
-                <div className="add-button" onClick={this.addComment.bind(this)}>
-                    <i className="fas fa-angle-double-right" />
-                </div>
-            </div>
-        );
-    }
-};
+//     render() {
+//         return (
+//             <div className="input-comment">
+//                 <input className="add-comment"
+//                     type="text"
+//                     ref={(input) => this.commentInput = input}
+//                     placeholder="Input you comment..."
+//                 />
+//                 <div className="add-button" onClick={this.addComment.bind(this)}>
+//                     <i className="fas fa-angle-double-right" />
+//                 </div>
+//             </div>
+//         );
+//     }
+// };
 
-class PostLine extends Component { 
-    putLike () {
-        console.log('like it');
+class PostLine extends Component {
+    putLike (id_photo) {
         // console.log(this);
-        // console.log(arguments[0]);
-        //console.log("value ", this.props.photo);        
+        //console.log("value ", this.props.photo);
         //console.log("value ", this.props.props.currentUser.id);
-        this.props.onPutLike({ id_user: this.props.currentUser.id, id_photo: arguments[0]});
+        this.props.onPutLike({ id_user: this.props.currentUser.id, id_photo: id_photo });
     }
     
     render() {
         // console.log(this.props.currentUser);
-        //console.log(this.props.userStore[1]);
         // this.props.userStore.map((user, index) => {
         //     console.log(user);
         // } );
-        // console.log('~~~~~~~~~~~~~');
-        // this.props.photoStore.map((photo, index) => {
-        //     console.log(photo);
-        // } );
-
-        // this.props.userStore.map((user, index) => {
-        //     console.log(user);
-        // } );
-        //console.log(this.props.currentUser);
         return (
             <div>
                 <Header />
@@ -62,8 +50,8 @@ class PostLine extends Component {
                                     <div className="photo" key={index}>
                                         <Link to={(this.props.userStore.find((user, index) => {
                                                 if (user.id === photo.userId) return '/' + user.nick;
-                                            })).nick}>                                            
-                                            <div className="photo-autor">    
+                                            })).nick}>
+                                            <div className="photo-autor">
                                                 <img src={this.props.userStore.find((user, index) => {
                                                     if (user.id === photo.userId) {
                                                         return user.avatar;
@@ -77,10 +65,10 @@ class PostLine extends Component {
                                         <img src={photo.src} alt={photo.alt} />
                                         <div className="photo-like">
                                             {(() => {
-                                                if ( photo.likes.find((like) => { if (like === this.props.currentUser.id ) { return true } else return false  })) {
+                                                if ( photo.likes.find((like) => {if (like === this.props.currentUser.id ) { return true } else return false})) {
                                                     return <div onClick={this.putLike.bind(this, photo.id)}><i className="fas fa-heart"/></div>;
                                                 } else return <div onClick={this.putLike.bind(this, photo.id)}><i className="far fa-heart"/></div>;
-                                            })()}                                           
+                                            })()}
                                             <div className="like-count"><b>{photo.likes.length}</b>&nbsp;likes</div>
                                         </div>
                                         <div className="photo-comment">
@@ -94,7 +82,7 @@ class PostLine extends Component {
                                                 }</b>&nbsp;{comment.text}</div>
                                             )}
                                         </div>
-                                        <Comment photo={photo} props = {this.props}/>
+                                        {/* <Comment photo={photo} props = {this.props}/> */}
                                     </div>
                                 )}
                             </div>
@@ -109,10 +97,8 @@ class PostLine extends Component {
 
 const mapStateToProps = (state) => {
     let currentUser;
-    state.user.map((user, index) => {      
-        if (user.nick === state.currentUser) {
-            currentUser = user;    
-        }
+    state.user.map((user, index) => {
+        if (user.nick === state.currentUser) currentUser = user;
     });
 
     return {
