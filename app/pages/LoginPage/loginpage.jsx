@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { logIn, signUp } from "../../actions/userActions";
 
 class LoginPage extends Component {
     logIn(event) {
@@ -131,10 +132,10 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
     return {
         onLogIn: (user) => {
-            dispatch({ type: 'LOG_IN', user });
+            dispatch(logIn(user));
         },
         onSignUp: (user) => {
-            dispatch({ type: 'SIGN_UP',  user });
+            dispatch(signUp(user));
        }
     }
 }

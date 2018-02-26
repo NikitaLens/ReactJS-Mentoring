@@ -3,28 +3,29 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { addComment, putLike } from "../../actions/photoActions";
 
-// class Comment extends Component {
-//     addComment() {
-//         this.props.props.onAddComment( { id_photo: this.props.photo.id, new_comment: {id_user: this.props.props.currentUser.id, text: this.commentInput.value} } );
-//         this.commentInput.value = '';
-//     }
+class Comment extends Component {
+    addComment() {
+        this.props.props.onAddComment( { id_photo: this.props.photo.id, new_comment: { id_user: this.props.props.currentUser.id, text: this.commentInput.value } } );
+        this.commentInput.value = '';
+    }
     
-//     render() {
-//         return (
-//             <div className="input-comment">
-//                 <input className="add-comment"
-//                     type="text"
-//                     ref={(input) => this.commentInput = input}
-//                     placeholder="Input you comment..."
-//                 />
-//                 <div className="add-button" onClick={this.addComment.bind(this)}>
-//                     <i className="fas fa-angle-double-right" />
-//                 </div>
-//             </div>
-//         );
-//     }
-// };
+    render() {
+        return (
+            <div className="input-comment">
+                <input className="add-comment"
+                    type="text"
+                    ref={(input) => this.commentInput = input}
+                    placeholder="Input you comment..."
+                />
+                <div className="add-button" onClick={this.addComment.bind(this)}>
+                    <i className="fas fa-angle-double-right" />
+                </div>
+            </div>
+        );
+    }
+}
 
 class PostLine extends Component {
     putLike (id_photo) {
@@ -82,7 +83,7 @@ class PostLine extends Component {
                                                 }</b>&nbsp;{comment.text}</div>
                                             )}
                                         </div>
-                                        {/* <Comment photo={photo} props = {this.props}/> */}
+                                        <Comment photo={photo} props = {this.props}/>
                                     </div>
                                 )}
                             </div>
@@ -111,10 +112,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         onAddComment: (comment) => {
-            dispatch({ type: 'ADD_COMMENT', comment });
+            dispatch(addComment(comment));
         },
         onPutLike: (like) => {
-            dispatch({ type: 'PUT_LIKE',  like });
+            dispatch(putLike(like));
        }
     }
 }
