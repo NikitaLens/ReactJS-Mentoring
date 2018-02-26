@@ -6,15 +6,18 @@ export default  [
 		userId: '1',
 		comment: [
 			{
-				id_user: '2',
+				user_id: '2',
+				user_nick: 'little_dampire',
 				text: 'Круто'
 			},
 			{
-				id_user: '3',
+				user_id: '3',
+				user_nick: 'destabilise_man',
 				text: 'Огонь!!!'
 			},
 			{
-				id_user: '4',
+				user_id: '4',
+				user_nick: 'yanuschenko',
 				text: 'Супер'
 			}
 		],
@@ -27,15 +30,18 @@ export default  [
         userId: '1',
 		comment: [
 			{
-				id_user: '2',
+				user_id: '2',
+				user_nick: 'little_dampire',
 				text: 'Огонь!!!'
 			},
 			{
-				id_user: '3',
+				user_id: '3',
+				user_nick: 'destabilise_man',
 				text: 'Cool'			
 			},
 			{
-				id_user: '4',
+				user_id: '4',
+				user_nick: 'yanuschenko',
 				text: 'Красивое фото'			
 			}
 		],
@@ -48,19 +54,21 @@ export default  [
         userId: '1',
 		comment: [
 			{
-				id: '2',
+				user_id: '2',
+				user_nick: 'little_dampire',
 				text: 'Круто'			
 			},
 			{
-				id: '3',
+				user_id: '3',
+				user_nick: 'destabilise_man',
 				text: 'Круто'			
 			},
 			{
-				id: '4',
+				user_id: '4',
+				user_nick: 'yanuschenko',
 				text: 'Круто'			
 			}
 		],
-		comment: [],
 		likes: [ '2', '4' ]
 	},
 	{

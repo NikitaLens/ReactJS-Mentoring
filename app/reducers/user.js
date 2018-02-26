@@ -14,7 +14,7 @@ export default function user( state = initialState, action ) {
             return [...state]
 		}
 		case SIGN_IN: {
-            let new_user = {
+            const new_user = {
                 id: Date.now().toString(),
                 nick: action.user.username,
                 password: action.user.password,
