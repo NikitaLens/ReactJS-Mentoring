@@ -1,10 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './styles.scss';
 
 class Header extends Component {
     render() {
+        const searchNavPanel = () => (
+            <Fragment>
+                <input className="" type="text" placeholder="Search"></input>
+                <nav>
+                    <a href="#1"><i className="far fa-compass"/></a>
+                    <a href="#2"><i className="far fa-heart"/></a>
+                    <Link to={`/${this.props.currentUser.nick}`}>
+                        <i className="far fa-user"/>
+                    </Link>
+                </nav>
+            </Fragment>
+        );
         return (
             <div className="header">
                 <div className="header-wrapper">
@@ -13,14 +25,7 @@ class Header extends Component {
                             <a href="/"><i className="fab fa-instagram"/></a>
                             <Link to='/'>Instagram</Link>
                         </div>
-                        <input className="" type="text" placeholder="Search"></input>
-                        <nav>
-                            <a href="#1"><i className="far fa-compass"/></a>
-                            <a href="#2"><i className="far fa-heart"/></a>
-                            <Link to={'/' + this.props.currentUser.nick}>
-                                <i className="far fa-user"/>
-                            </Link>
-                        </nav>
+                        {this.props.currentUser && searchNavPanel()}
                     </div>
                 </div>
             </div>
@@ -29,16 +34,10 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => {
-    let currentUser;
-    state.user.map((user) => {
-        if (user.nick === state.currentUser) currentUser = user;
-    });
-
     return {
-        currentUser
+        currentUser: state.currentUser
     };
 }
-
 
 export default connect(
     mapStateToProps

@@ -3,12 +3,28 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { clickFollow } from "../../actions/userActions";
 
 class UserPage extends Component {
+    settings = () => {
+        console.log('Settings');
+    }
+
+    onFollow = () => {
+        this.props.dispatch(clickFollow({ id_user: this.props.currentUser.id, id_follow: this.props.ownerUserPage.id }));
+    }
+    
     render() {
-        // console.log(this.props.userPage);
-        // console.log(this.props.currentPhoto);
-        //this.props.photoStore.map((photo, index) => console.log(photo.src) );
+        const ownerButton = () => (
+            <button onClick={this.settings}>Settings</button>
+        );
+    
+        const guestButton = () => (
+            (this.props.ownerUserPage.followers.find(follower => follower === this.props.currentUser.id))
+                ? <button onClick={this.onFollow}>Follow</button>
+                : <button onClick={this.onFollow}>Following</button>
+        );
+
         return (
             <div>
                 <Header />
@@ -17,22 +33,25 @@ class UserPage extends Component {
                         <div className="main-content">
                             <div className="profile">
                                 <div className="photo">
-                                    <img src={this.props.userPage.avatar} alt="nikitalens" />
+                                    <img src={this.props.ownerUserPage.avatar} alt="avatar" />
                                 </div>
                                 <div className="info">
-                                    <div className="info-nick">{this.props.userPage.nick}</div>
-                                    <div className="info-count">
-                                        <div className="post-count"><b>{this.props.userPage.photos.length}</b>&nbsp;posts</div>
-                                        <div className="followers-count"><b>{this.props.userPage.followers.length}</b>&nbsp;followers</div>
-                                        <div className="follow-count"><b>{this.props.userPage.following.length}</b>&nbsp;following</div>
+                                    <div className="info-nick">
+                                        {this.props.ownerUserPage.nick}
+                                        {(this.props.currentUser.nick === this.props.ownerUserPage.nick) ? ownerButton() : guestButton()}
                                     </div>
-                                    <div className="info-fullname">{this.props.userPage.fullname}</div>
+                                    <div className="info-count">
+                                        <div className="post-count"><b>{this.props.currentPhoto.length}</b>&nbsp;posts</div>
+                                        <div className="followers-count"><b>{this.props.ownerUserPage.followers.length}</b>&nbsp;followers</div>
+                                        <div className="follow-count"><b>{this.props.ownerUserPage.following.length}</b>&nbsp;following</div>
+                                    </div>
+                                    <div className="info-fullname">{this.props.ownerUserPage.firstName + ' ' + this.props.ownerUserPage.lastName}</div>
                                 </div>
                             </div>
                             <div className="photo-album">
                                 {this.props.currentPhoto.map((photo, index) =>
                                     <div className="photo" key={index}>
-                                        <img src={photo.src} alt={photo.alt} />
+                                        <img src={photo.src} alt={photo.id} />
                                     </div>
                                 )}
                             </div>
@@ -46,16 +65,16 @@ class UserPage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let userPage;
+    let ownerUserPage;
     state.user.find((user) => {
         if (user.nick === ownProps.match.params.nick) {
-            userPage = user;
+            ownerUserPage = user;
         }
     });
 
     const currentPhoto = [];
     state.photo.map((photo) => {
-        if (photo.userId === userPage.id) {
+        if (photo.userId === ownerUserPage.id) {
             currentPhoto.push(photo);
         }
     });
@@ -63,18 +82,11 @@ const mapStateToProps = (state, ownProps) => {
     return {
         photoStore: state.photo,
         userStore: state.user,
-        userPage,
+        currentUser: state.currentUser,
+        ownerUserPage,
         currentPhoto,
         ownProps
     };
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(UserPage);
+export default connect(mapStateToProps)(UserPage);

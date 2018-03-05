@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
+import { addNewComment } from "../../actions/photoActions";
 
 class CommentInput extends Component {
-    addComment = () => {
+    onAddComment = () => {
         const comment = {
-            id_photo: this.props.photo.id,
-            new_comment: {
-                user_id: this.props.currentUser.id,
-                user_nick: this.props.currentUser.nick,
-                text: this.commentInput.value
-            }
+            photo_id: this.props.photo.id,
+            user_id: this.props.currentUser.id,
+            text: this.commentInput.value
         }
-        this.props.onAddComment(comment);
+        this.props.dispatch(addNewComment(comment));
         this.commentInput.value = '';
     }
     
@@ -22,7 +20,7 @@ class CommentInput extends Component {
                     ref={(input) => this.commentInput = input}
                     placeholder="Input you comment..."
                 />
-                <div className="add-button" onClick={this.addComment}>
+                <div className="add-button" onClick={this.onAddComment}>
                     <i className="fas fa-angle-double-right" />
                 </div>
             </div>

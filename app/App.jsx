@@ -27,9 +27,9 @@ export default class App extends React.Component {
             <Provider store={store}>
                 <Router history={history}>
                     <Switch>
-                        <Route exact path="/" component={PostLine}/>
+                        <PrivateRoute exact path="/" component={PostLine}/>
                         <Route exact path="/login" component={LoginPage}/>
-                        <Route exact path="/:nick" component={UserPage}/>
+                        <PrivateRoute exact path="/:nick" component={UserPage}/>
                     </Switch>
                 </Router>
             </Provider>

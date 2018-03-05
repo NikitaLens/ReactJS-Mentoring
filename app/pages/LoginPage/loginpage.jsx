@@ -1,45 +1,65 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { logIn, signUp } from "../../actions/userActions";
+import { onLogIn, onSignUp } from "../../actions/userActions";
+
+const Input = ({ name, rf }) => (
+    <div className="input-auth">
+        <div className="label">{name}</div>
+        <input className="auth"
+            type="text"
+            placeholder={name}
+            ref={(input) => rf = input}
+        />
+    </div>
+);
 
 class LoginPage extends Component {
-    logIn(event) {
-        event.preventDefault();
-        this.props.onLogIn({
-            username: this.logUsername.value,
-            password: this.logPassword.value
-        });
-        this.logUsername.value = '';
-        this.logPassword.value = '';
-        this.signEmail.value = '';
-        this.signFullname.value = '';
-        this.signUsername.value = '';
-        this.signPassword.value = '';
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isLogedIn) {
+            this.props.history.replace('/');
+        }
     }
 
-    signUp(event) {
+    logIn = (event) => {
         event.preventDefault();
-        this.props.onSignUp({
-            email: this.signEmail.value,
-            fullname: this.signFullname.value,
-            username: this.signUsername.value,
-            password: this.signPassword.value
-        });
-        this.logUsername.value = '';
-        this.logPassword.value = '';
-        this.signEmail.value = '';
-        this.signFullname.value = '';
-        this.signUsername.value = '';
-        this.signPassword.value = '';
+        const user = {
+            username: 'nikita.lensckij@yandex.ru',
+            password: '1234'
+        };
+        this.props.dispatch(onLogIn(user));
+        // this.props.dispatch(onLogIn({
+        //     username: this.logUsername.value,
+        //     password: this.logPassword.value
+        // }));
+    }
+
+    signUp = (event) => {
+        event.preventDefault();
+        const user = {
+            email: "example@gmail.com",
+            firstName: "Barry",
+            lastName: "Allen",
+            avatar: "",
+            link: "",
+            login: "ballen",
+            password: "qwerty"
+        };
+        this.props.dispatch(onSignUp(user));
+        // this.props.dispatch(onSignUp({
+        //     email: this.signEmail.value,
+        //     firstName:  this.signFirstName.value,
+        //     lastName: this.signLastName.value,
+        //     avatar: '',
+        //     link: '',
+        //     login: this.signUsername.value,
+        //     password: this.signPassword.value
+        // }));
     }
 
     render() {
-        // console.log(this.props.userPage);
-        // console.log(this.props.currentPhoto);
-        //this.props.photoStore.map((photo, index) => console.log(photo.src) );
         return (
             <div>
                 <Header />
@@ -49,59 +69,18 @@ class LoginPage extends Component {
                             <div className="log-or-sing">
                                 <div className="welcome">Welcome to Instagram</div>
                                 <div className="auth-description">Authorization</div>
-                                <form onSubmit={this.logIn.bind(this)} className="log-in">
-                                    <div className="input-auth">
-                                        <div className="label">Username</div>
-                                        <input className="auth"
-                                            type="text"
-                                            placeholder="Username"
-                                            ref={(input) => this.logUsername = input}
-                                        />
-                                    </div>
-                                    <div className="input-auth">
-                                        <div className="label">Password</div>
-                                        <input className="auth"
-                                            type="text"
-                                            placeholder="Password"
-                                            ref={(input) => this.logPassword = input}
-                                        />
-                                    </div>
+                                <form onSubmit={this.logIn} className="log-in">
+                                    <Input name={'Username'} rf={'this.logUsername'} />
+                                    <Input name={'Password'} rf={'this.logPassword'} />
                                     <button>Log In</button>
                                 </form>
                                 <div className="auth-description">Registration</div>
-                                <form onSubmit={this.signUp.bind(this)} className="sing-up">
-                                    <div className="input-auth">
-                                        <div className="label">Email</div>
-                                        <input className="auth"
-                                            type="text"
-                                            placeholder="Email"
-                                            ref={(input) => this.signEmail = input}
-                                        />
-                                    </div>
-                                    <div className="input-auth">
-                                        <div className="label">Full Name</div>
-                                        <input className="auth"
-                                            type="text"
-                                            placeholder="Full Name"
-                                            ref={(input) => this.signFullname = input}
-                                        />
-                                    </div>
-                                    <div className="input-auth">
-                                        <div className="label">Username</div>
-                                        <input className="auth"
-                                            type="text"
-                                            placeholder="Username"
-                                            ref={(input) => this.signUsername = input}
-                                        />
-                                    </div>
-                                    <div className="input-auth">
-                                        <div className="label">Password</div>
-                                        <input className="auth"
-                                            type="text"
-                                            placeholder="Password"
-                                            ref={(input) => this.signPassword = input}
-                                        />
-                                    </div>
+                                <form onSubmit={this.signUp} className="sing-up">
+                                    <Input name={'Email'} rf={'this.signEmail'} />
+                                    <Input name={'First Name'} rf={'this.signFirstName'} />
+                                    <Input name={'Last Name'} rf={'this.signLastName'} />
+                                    <Input name={'Username'} rf={'this.signUsername'} />
+                                    <Input name={'Password'} rf={'this.signPassword'} />
                                     <button>Sign Up</button>
                                 </form>
                             </div>
@@ -114,33 +93,8 @@ class LoginPage extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    let userPage;
-    state.user.map((user, index) => {
-        if (user.nick === ownProps.match.params.nick) {
-            userPage = user;
-        }
-    });
+const mapStateToProps = state => ({
+    isLogedIn: !!state.currentUser,
+});
 
-    return {
-        userStore: state.user,
-        userPage,
-        ownProps
-    };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onLogIn: (user) => {
-            dispatch(logIn(user));
-        },
-        onSignUp: (user) => {
-            dispatch(signUp(user));
-       }
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LoginPage);
+export default connect(mapStateToProps)(LoginPage);

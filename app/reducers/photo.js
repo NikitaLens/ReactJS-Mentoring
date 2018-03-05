@@ -1,53 +1,34 @@
-import initialState from '../mockup/photos';
-import { ADD_COMMENT, PUT_LIKE } from '../actions/photoActions';
+import { ADD_COMMENT, TOOGLE_LIKE, PUT_PHOTO } from '../actions/photoActions';
 
-// const addComment = (state, action) => {
-//     state.forEach( function(item) {
-// 		if (item.id === action.comment.id_photo) {
-// 			item.comment.push(action.comment.new_comment);
-// 		}
-// 	});
-// 	return [...state]
-// };
+const initialState = [];
 
-// const putLike = (state, action) => {
-//     state.forEach( function(item) {
-// 		if (item.id === action.like.id_photo) {
-// 			let idDel = item.likes.indexOf(action.like.id_user);
-// 			if ( idDel != -1 ) {
-// 				item.likes.splice(idDel, 1);
-// 			} else {
-// 				item.likes.push(action.like.id_user);
-// 			}
-// 		}
-// 	});
-// 	return [...state]
-// };
-
-export default function photo( state = initialState, action ) {    
-	// console.log(action);
-	// console.log(state);
+export default function photo(state = initialState, action) {
 	switch (action.type) {
-		case ADD_COMMENT: {
-			state.forEach( function(item) {
-				if (item.id === action.comment.id_photo) {
-					item.comment.push(action.comment.new_comment);
-				}
-			});
-			return [...state];
+		case PUT_PHOTO: {			
+			return action.photos;
 		}
-		case PUT_LIKE: {
-			state.forEach( function(item) {
-				if (item.id === action.like.id_photo) {
-					let idDel = item.likes.indexOf(action.like.id_user);
-					if ( idDel != -1 ) {
-						item.likes.splice(idDel, 1);
+		case TOOGLE_LIKE: {
+			const new_state = JSON.parse(JSON.stringify(state)).map(function(photo) {
+				if (photo.id === action.like.id_photo) {
+					const idDel = photo.likes.indexOf(action.like.id_user);
+					if (idDel !== -1) {
+						photo.likes.splice(idDel, 1);
 					} else {
-						item.likes.push(action.like.id_user);
+						photo.likes.push(action.like.id_user);
 					}
 				}
+				return photo;
 			});
-			return [...state]
+			return new_state;
+		}
+		case ADD_COMMENT: {
+			const new_state = JSON.parse(JSON.stringify(state)).map(function(photo) {
+				if (photo.id === action.comment.photo_id) {
+					photo.comments.push(action.comment);
+				}
+				return photo;
+			});
+			return new_state;
 		}
 		default: {
 			return state;

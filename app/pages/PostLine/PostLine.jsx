@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { addComment, putLike } from "../../actions/photoActions";
+import { addComment, putLike, loadPhotos } from "../../actions/photoActions";
 import Post from "../../components/Post";
+import { loadUsers } from "../../actions/userActions";
 
 class PostLine extends Component {
+    componentDidMount() {
+        this.props.dispatch(loadUsers(this.props.currentUser));
+        this.props.dispatch(loadPhotos(this.props.currentUser));
+    }
+
     render() {
-        // console.log(this.props.currentUser);
-        // this.props.userStore.map((user, index) => {
-        //     console.log(user);
-        // } );
         return (
             <div>
                 <Header />
@@ -32,10 +34,9 @@ class PostLine extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        photoStore: state.photo,
-    };
-};
+const mapStateToProps = (state) => ({
+    photoStore: state.photo,
+    currentUser: state.currentUser
+});
 
 export default connect(mapStateToProps)(PostLine);

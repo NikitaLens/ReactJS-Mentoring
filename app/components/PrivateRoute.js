@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-        {...rest}
-        render={props =>
-            window.localStorage.getItem('auth') ? (
-                <Component {...props} />
-            ) : (
-                <Redirect
-                    to={{
-                        pathname: '/login',
-                        state: { from: props.location }
-                    }}
-                />
-            )
-        }
-    />
-);
+class PrivateRoute extends Component {
+    render() {
+        const { component: Component, currentUser, ...rest } = this.props;
+        return (
+            <Route
+                {...rest}
+                render={props =>
+                    currentUser ? (
+                        <Component {...props} />
+                    ) : (
+                        <Redirect
+                            to={{
+                                pathname: '/login',
+                                state: { from: props.location }
+                            }}
+                        />
+                    )
+                }
+            />
+        );
+    }
+}
 
-export default PrivateRoute;
+const mapStateToProps = (state) => ({    
+    currentUser: state.currentUser
+});
+
+export default connect(mapStateToProps)(PrivateRoute);

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-const CommentList = ({ comment }) => (
+const CommentList = ({ comments }) => (
     <div className="photo-comment">
-        {comment.map((comment, index) =>
+        { comments.map((comment, index) =>
             <div className="comment" key={index}>
-                <b>{comment.user_nick}</b>
+                <b>{comment.user_id.nick}</b>
                 <span>&nbsp;{comment.text}</span>
             </div>
         )}
