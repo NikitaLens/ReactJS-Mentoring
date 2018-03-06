@@ -77,17 +77,15 @@ class UserPage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let ownerUserPage;
-    state.user.find((user) => {
-        if (user.nick === ownProps.match.params.nick) {
-            ownerUserPage = user;
-        }
+    const ownerUserPage = state.user.find(user => {
+        return user.nick === ownProps.match.params.nick
     });
 
-    const currentPhoto = [];
-    state.photo.map((photo) => {
-        photo.userId === ownerUserPage.id && currentPhoto.push(photo);
-    });
+    const currentPhoto = state.photo.reduce((currentPhoto, photo) => {
+        if (photo.userId === ownerUserPage.id) {
+            currentPhoto.push(photo);
+        } return currentPhoto;
+    }, []);
 
     return {
         currentUser: state.currentUser,
