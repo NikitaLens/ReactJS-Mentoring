@@ -34,9 +34,9 @@ class PostLine extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    photoStore: state.photo,
-    currentUser: state.currentUser
+const mapStateToProps = state => ({
+    currentUser: state.currentUser,
+    photoStore: state.photo
 });
 
 export default connect(mapStateToProps)(PostLine);

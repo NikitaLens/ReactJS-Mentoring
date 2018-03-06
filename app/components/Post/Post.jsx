@@ -8,10 +8,10 @@ import CommentsList from '../CommentList';
 import CommentInput from '../CommentInput';
 
 class Post extends Component {
-    clickLike (id_photo) {
+    clickLike(id_photo) {
         this.props.dispatch(putLike({ id_user: this.props.currentUser.id, id_photo: id_photo }));
     }
-    
+
     render() {
         const { photo } = this.props;
         const postUser = this.props.userStore.find(user => user.id === photo.userId);
@@ -27,12 +27,12 @@ class Post extends Component {
                 </Link>
                 <img src={photo.src} alt={photo.alt} />
                 <div className="photo-like">
-                    <div onClick={ () => this.clickLike(photo.id) }>
+                    <div onClick={() => this.clickLike(photo.id)}>
                         {userPostLike && <div>
-                            <span className="fas fa-heart"/>
+                            <span className="fas fa-heart" />
                         </div>}
                         {!userPostLike && <div>
-                            <span className="far fa-heart"/>
+                            <span className="far fa-heart" />
                         </div>}
                     </div>
                     <div className="like-count">
@@ -41,13 +41,13 @@ class Post extends Component {
                     </div>
                 </div>
                 <CommentsList comments={photo.comments} />
-                <CommentInput photo={photo} {...this.props}/>
+                <CommentInput photo={photo} {...this.props} />
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         currentUser: state.currentUser,
         userStore: state.user

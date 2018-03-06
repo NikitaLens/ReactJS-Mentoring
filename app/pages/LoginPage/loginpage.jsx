@@ -5,16 +5,21 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { onLogIn, onSignUp } from "../../actions/userActions";
 
-const Input = ({ name, rf }) => (
-    <div className="input-auth">
-        <div className="label">{name}</div>
-        <input className="auth"
-            type="text"
-            placeholder={name}
-            ref={(input) => rf = input}
-        />
-    </div>
-);
+class Input extends Component {
+    render() {
+        let rf = this.props.rf;
+        return (
+            <div className="input-auth">
+                <div className="label">{this.props.name}</div>
+                <input className="auth"
+                    type="text"
+                    placeholder={this.props.name}
+                    ref={(input) => rf = input}
+                />
+            </div>
+        )
+    }
+}
 
 class LoginPage extends Component {
     componentWillReceiveProps(nextProps) {

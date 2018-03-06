@@ -1,14 +1,14 @@
 import { ADD_COMMENT, TOOGLE_LIKE, PUT_PHOTO } from '../actions/photoActions';
 
-const initialState = [];
-
-export default function photo(state = initialState, action) {
+export default function photo(state = [], action) {
 	switch (action.type) {
-		case PUT_PHOTO: {			
-			return action.photos;
+		case PUT_PHOTO: {
+			return [
+				...action.photos
+			];
 		}
 		case TOOGLE_LIKE: {
-			const new_state = JSON.parse(JSON.stringify(state)).map(function(photo) {
+			const new_state = JSON.parse(JSON.stringify(state)).map(function (photo) {
 				if (photo.id === action.like.id_photo) {
 					const idDel = photo.likes.indexOf(action.like.id_user);
 					if (idDel !== -1) {
@@ -22,7 +22,7 @@ export default function photo(state = initialState, action) {
 			return new_state;
 		}
 		case ADD_COMMENT: {
-			const new_state = JSON.parse(JSON.stringify(state)).map(function(photo) {
+			const new_state = JSON.parse(JSON.stringify(state)).map(function (photo) {
 				if (photo.id === action.comment.photo_id) {
 					photo.comments.push(action.comment);
 				}

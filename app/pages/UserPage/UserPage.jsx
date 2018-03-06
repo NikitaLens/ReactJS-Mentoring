@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { clickFollow } from "../../actions/userActions";
 
-class UserPage extends Component {
+class FollowSettingButton extends Component {
     settings = () => {
         console.log('Settings');
     }
@@ -13,18 +13,30 @@ class UserPage extends Component {
     onFollow = () => {
         this.props.dispatch(clickFollow({ id_user: this.props.currentUser.id, id_follow: this.props.ownerUserPage.id }));
     }
-    
+
     render() {
+        const { ownerUserPage, currentUser } = this.props;
+        const isFollow = ownerUserPage.followers.find(follower => follower === currentUser.id);
+
         const ownerButton = () => (
             <button onClick={this.settings}>Settings</button>
         );
-    
+
         const guestButton = () => (
-            (this.props.ownerUserPage.followers.find(follower => follower === this.props.currentUser.id))
-                ? <button onClick={this.onFollow}>Follow</button>
-                : <button onClick={this.onFollow}>Following</button>
+            (isFollow)
+                ? <button onClick={this.onFollow}>Following</button>
+                : <button onClick={this.onFollow}>Follow</button>
         );
 
+        return (
+            (currentUser.nick === ownerUserPage.nick) ? ownerButton() : guestButton()
+        )
+    }
+}
+
+class UserPage extends Component {
+    render() {
+        const { ownerUserPage, currentPhoto } = this.props;
         return (
             <div>
                 <Header />
@@ -33,23 +45,23 @@ class UserPage extends Component {
                         <div className="main-content">
                             <div className="profile">
                                 <div className="photo">
-                                    <img src={this.props.ownerUserPage.avatar} alt="avatar" />
+                                    <img src={ownerUserPage.avatar} alt="avatar" />
                                 </div>
                                 <div className="info">
                                     <div className="info-nick">
-                                        {this.props.ownerUserPage.nick}
-                                        {(this.props.currentUser.nick === this.props.ownerUserPage.nick) ? ownerButton() : guestButton()}
+                                        {ownerUserPage.nick}
+                                        <FollowSettingButton {...this.props} />
                                     </div>
                                     <div className="info-count">
-                                        <div className="post-count"><b>{this.props.currentPhoto.length}</b>&nbsp;posts</div>
-                                        <div className="followers-count"><b>{this.props.ownerUserPage.followers.length}</b>&nbsp;followers</div>
-                                        <div className="follow-count"><b>{this.props.ownerUserPage.following.length}</b>&nbsp;following</div>
+                                        <div className="post-count"><b>{currentPhoto.length}</b>&nbsp;posts</div>
+                                        <div className="followers-count"><b>{ownerUserPage.followers.length}</b>&nbsp;followers</div>
+                                        <div className="follow-count"><b>{ownerUserPage.following.length}</b>&nbsp;following</div>
                                     </div>
-                                    <div className="info-fullname">{this.props.ownerUserPage.firstName + ' ' + this.props.ownerUserPage.lastName}</div>
+                                    <div className="info-fullname">{ownerUserPage.firstName + ' ' + ownerUserPage.lastName}</div>
                                 </div>
                             </div>
                             <div className="photo-album">
-                                {this.props.currentPhoto.map((photo, index) =>
+                                {currentPhoto.map((photo, index) =>
                                     <div className="photo" key={index}>
                                         <img src={photo.src} alt={photo.id} />
                                     </div>
@@ -74,15 +86,13 @@ const mapStateToProps = (state, ownProps) => {
 
     const currentPhoto = [];
     state.photo.map((photo) => {
-        if (photo.userId === ownerUserPage.id) {
-            currentPhoto.push(photo);
-        }
+        photo.userId === ownerUserPage.id && currentPhoto.push(photo);
     });
 
     return {
-        photoStore: state.photo,
-        userStore: state.user,
         currentUser: state.currentUser,
+        userStore: state.user,
+        photoStore: state.photo,
         ownerUserPage,
         currentPhoto,
         ownProps

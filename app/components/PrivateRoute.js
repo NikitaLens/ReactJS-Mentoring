@@ -12,20 +12,20 @@ class PrivateRoute extends Component {
                     currentUser ? (
                         <Component {...props} />
                     ) : (
-                        <Redirect
-                            to={{
-                                pathname: '/login',
-                                state: { from: props.location }
-                            }}
-                        />
-                    )
+                            <Redirect
+                                to={{
+                                    pathname: '/login',
+                                    state: { from: props.location }
+                                }}
+                            />
+                        )
                 }
             />
         );
     }
 }
 
-const mapStateToProps = (state) => ({    
+const mapStateToProps = state => ({
     currentUser: state.currentUser
 });
 

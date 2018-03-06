@@ -11,7 +11,7 @@ class CommentInput extends Component {
         this.props.dispatch(addNewComment(comment));
         this.commentInput.value = '';
     }
-    
+
     render() {
         return (
             <div className="input-comment">

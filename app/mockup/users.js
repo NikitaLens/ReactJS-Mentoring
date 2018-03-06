@@ -1,5 +1,5 @@
 export default [
-	{
+    {
         id: '1',
         nick: 'nikitalens',
         password: '',
@@ -12,8 +12,8 @@ export default [
         photos: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         followers: [2, 3, 4, 5],
         following: [2, 3, 4]
-	},
-	{
+    },
+    {
         id: '2',
         nick: 'little_dampire',
         password: '',
@@ -40,7 +40,7 @@ export default [
         photos: [10],
         followers: [2, 3, 4, 5],
         following: [2, 3, 4]
-	},
+    },
     {
         id: '4',
         nick: 'yanuschenko',
@@ -54,7 +54,7 @@ export default [
         photos: [11],
         followers: [2, 3, 4, 5],
         following: [2, 3, 4]
-	},
+    },
     {
         id: '5',
         nick: 'anonimus',
@@ -68,5 +68,5 @@ export default [
         photos: [],
         followers: [2, 3, 4, 5],
         following: []
-	}
+    }
 ];
