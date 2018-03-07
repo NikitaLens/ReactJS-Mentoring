@@ -4,6 +4,7 @@ export default function photo(state = [], action) {
 	switch (action.type) {
 		case PUT_PHOTO: {
 			return [
+				...state,
 				...action.photos
 			];
 		}
@@ -35,3 +36,5 @@ export default function photo(state = [], action) {
 		}
 	}
 }
+
+

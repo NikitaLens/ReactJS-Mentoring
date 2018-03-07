@@ -1,5 +1,5 @@
 import { fetchApi, fetchGet, fetchPost, fetchPut } from '../api/fetchApi';
-const config = require('../config.json');
+import { baseUrl } from '../config.json';
 export const LOG_IN = 'LOG_IN';
 export const SIGN_IN = 'SIGN_IN';
 export const GET_USERS = 'GET_USERS';
@@ -32,8 +32,8 @@ export const onLogIn = user => async dispatch => {
             password: user.password
         };
 
-        const auth = await fetchPost(`${config.baseUrl}/login`, authPayload);
-        const authuser = await fetchGet(`${config.baseUrl}/api/user/${auth.id}`);
+        const auth = await fetchPost(`${baseUrl}/login`, authPayload);
+        const authuser = await fetchGet(`${baseUrl}/api/user/${auth.id}`);
 
         dispatch(logIn(authuser));
     } catch (error) {
@@ -53,8 +53,8 @@ export const onSignUp = user => async dispatch => {
             password: user.password
         };
         
-        const sign = await fetchPost(`${config.baseUrl}/api/user`, signPayload);
-        const signUser = await fetchGet(`${config.baseUrl}/api/user/${sign.id}`);
+        const sign = await fetchPost(`${baseUrl}/api/user`, signPayload);
+        const signUser = await fetchGet(`${baseUrl}/api/user/${sign.id}`);
 
         dispatch(logIn(signUser));
     } catch (error) {
@@ -62,10 +62,10 @@ export const onSignUp = user => async dispatch => {
     }
 };
 
-export const loadUsers = currentUser => async dispatch => {
+export const loadUsers = (currentUser, page) => async dispatch => {
     try {
         const users = [currentUser.id, ...currentUser.following];        
-        const following = await fetchGet(`${config.baseUrl}/api/user/${currentUser.id}/following`);
+        const following = await fetchGet(`${baseUrl}/api/user/${currentUser.id}/following`);
         dispatch(getUsers([currentUser, ...following]));
     } catch (error) {
         console.error('Request failed', error);
@@ -74,7 +74,7 @@ export const loadUsers = currentUser => async dispatch => {
 
 export const clickFollow = follow => async dispatch => {
     try {
-        const followResp = await fetchPut(`${config.baseUrl}/api/user/${follow.id_user}/follow/${follow.id_follow}`);
+        const followResp = await fetchPut(`${baseUrl}/api/user/${follow.id_user}/follow/${follow.id_follow}`);
         dispatch(toggleFollow(follow));
     } catch (error) {
         console.error('Request failed', error);
