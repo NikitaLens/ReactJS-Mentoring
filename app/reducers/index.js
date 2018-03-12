@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import photo from './photo';
 import user from './user';
+import searchUser from './searchUser';
 import currentUser from './currentUser';
 import photoStoreInfo from './photoStoreInfo';
 
@@ -10,6 +11,7 @@ export default combineReducers({
     currentUser: currentUser,
     photoStoreInfo: photoStoreInfo,
     user,
+    searchUser,
     photo
 })
 

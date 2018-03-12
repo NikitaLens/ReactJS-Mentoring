@@ -8,14 +8,15 @@ import Post from "../../components/Post";
 import { loadUsers } from "../../actions/userActions";
 import throttle from "lodash/throttle";
 
-class PostLine extends Component {    
+class PostLine extends Component {
     callbackScroll = (event) => {
-        const hasNext = this.props.photoStoreInfo.hasNext;
+        const { dispatch, currentUser, photoStoreInfo }  = this.props;
+
+        const hasNext = photoStoreInfo.hasNext;
         const clientHeight = document.documentElement.clientHeight;
         const scrollHeight = document.documentElement.scrollHeight;
         const scrollTop = document.documentElement.scrollTop;
         
-        const { dispatch, currentUser, photoStoreInfo }  = this.props;
         if (hasNext && scrollTop !== 0 && scrollHeight - clientHeight - scrollTop < 100) {
             dispatch(loadPhotos(currentUser, photoStoreInfo.photoPage));
         }
@@ -34,6 +35,10 @@ class PostLine extends Component {
     }
 
     render() {
+        const { photoStoreInfo } = this.props;
+        if (photoStoreInfo.photoPage === 1 && photoStoreInfo.fetching) {
+            return (<div className="wrapper"><div className="cssload-loader"></div></div>);
+        }
         return (
             <div>
                 <Header />
@@ -44,6 +49,10 @@ class PostLine extends Component {
                                 {this.props.photoStore.map((photo, index) =>
                                     <Post photo={photo} key={index} />
                                 )}
+                                {photoStoreInfo.photoPage !== 1
+                                    && photoStoreInfo.fetching
+                                    && (<div className="cssload-wrapper"><div className="cssload-loader"/></div>)
+                                }
                             </div>
                         </div>
                     </div>

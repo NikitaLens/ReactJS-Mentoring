@@ -3,6 +3,7 @@ import { baseUrl } from '../config.json';
 export const LOG_IN = 'LOG_IN';
 export const SIGN_IN = 'SIGN_IN';
 export const GET_USERS = 'GET_USERS';
+export const GET_USERS_SEARCH = 'GET_USERS_SEARCH';
 export const TOOGLE_FOLLOW = 'TOOGLE_FOLLOW';
 
 export const logIn = user => ({
@@ -17,6 +18,11 @@ export const signUp = user => ({
 
 export const getUsers = users => ({
     type: GET_USERS,
+    users
+});
+
+export const getUsersSearch = users => ({
+    type: GET_USERS_SEARCH,
     users
 });
 
@@ -64,9 +70,18 @@ export const onSignUp = user => async dispatch => {
 
 export const loadUsers = (currentUser, page) => async dispatch => {
     try {
-        const users = [currentUser.id, ...currentUser.following];        
+        const users = [currentUser.id, ...currentUser.following];
         const following = await fetchGet(`${baseUrl}/api/user/${currentUser.id}/following`);
         dispatch(getUsers([currentUser, ...following]));
+    } catch (error) {
+        console.error('Request failed', error);
+    }
+};
+
+export const loadUsersSearch = (search) => async dispatch => {
+    try {
+        const searchRes = await fetchGet(`${baseUrl}/users?q=${search}`);
+        dispatch(getUsersSearch(searchRes));
     } catch (error) {
         console.error('Request failed', error);
     }

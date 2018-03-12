@@ -5,13 +5,18 @@ export const TOOGLE_LIKE = 'TOOGLE_LIKE';
 export const PUT_PHOTO = 'PUT_PHOTO';
 export const UPDATE_PHOTO = 'UPDATE_PHOTO';
 export const GET_COMMENT = 'GET_COMMENT';
+export const FETCHING = 'FETCHING';
 
-export const putPhoto = photos => ({
+const fetching = {
+    type: FETCHING
+};
+
+const putPhoto = photos => ({
     type: PUT_PHOTO,
     photos
 });
 
-export const updatePhotoStoreInfo = update => ({
+const updatePhotoStoreInfo = update => ({
     type: UPDATE_PHOTO,
     update
 });
@@ -21,18 +26,19 @@ export const getComments = comments => ({
     comments
 });
 
-export const addComment = comment => ({
+const addComment = comment => ({
     type: ADD_COMMENT,
     comment
 });
 
-export const toggleLike = like => ({
+const toggleLike = like => ({
     type: TOOGLE_LIKE,
     like
 });
 
 export const loadPhotos = (currentUser, page) => async dispatch => {
     try {
+        dispatch(fetching);
         const users = [currentUser.id, ...currentUser.following];
         const photo = await fetchGet(`${baseUrl}/api/photos?users=${users}&page=${page}`);
 

@@ -1,13 +1,27 @@
-import { UPDATE_PHOTO } from '../actions/photoActions';
+import { UPDATE_PHOTO, FETCHING, PUT_PHOTO } from '../actions/photoActions';
 
-export default function photoStoreInfo(state = { photoPage: 1, hasNext: true }, action) {
+const defaultStore = { 
+	photoPage: 1,
+	hasNext: true,
+	fetching: false
+};
+
+export default function photoStoreInfo(state = defaultStore, action) {
 	switch (action.type) {
-		case UPDATE_PHOTO: {
+		case FETCHING:
+			return {
+				...state,
+				fetching: true
+			};
+		case PUT_PHOTO:
+			return {
+				...state,
+				fetching: false
+			};
+		case UPDATE_PHOTO:
 			return action.update;
-		}
-		default: {
+		default:
 			return state;
-		}
 	}
 }
 

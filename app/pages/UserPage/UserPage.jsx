@@ -7,7 +7,7 @@ import { clickFollow } from "../../actions/userActions";
 
 class FollowSettingButton extends Component {
     settings = () => {
-        console.log('Settings');
+        // console.log('Settings');
     }
 
     onFollow = () => {
