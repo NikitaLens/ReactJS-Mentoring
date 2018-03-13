@@ -6,9 +6,9 @@ import debounce from "lodash/debounce";
 import { loadUsersSearch } from "../../actions/userActions";
 
 class Header extends Component {
-    callbackSearch = (event) => {
+    callbackSearch = () => {
         const searchElement = document.getElementById('search');
-        this.props.dispatch(loadUsersSearch(searchElement.value));
+        this.props.dispatch(loadUsersSearch(this.searchInput.value));
     };
 
     search = debounce(this.callbackSearch, 500);
@@ -17,12 +17,6 @@ class Header extends Component {
         const searchList = document.getElementById('searchList');
         searchList.style.display = 'block';
     };
-
-    // hideSearchList = (event) => {
-    //     const searchList = document.getElementById('searchList');
-    //     console.log('event', event);
-    //     searchList.style.display = 'none';
-    // };
 
     hideSearchList = (event) => {
         const searchList = document.getElementById('searchList');
@@ -33,28 +27,23 @@ class Header extends Component {
     };
     
     componentDidMount() {
-        const searchElement = document.getElementById('search');
-        if (searchElement) {
-            searchElement.addEventListener('keyup', this.search);
-            searchElement.addEventListener('focus', this.showSearchList);
+        if (document.getElementById('search')) {
             window.addEventListener('click', this.hideSearchList);
-            this.props.dispatch(loadUsersSearch(searchElement.value));
-        }
-    }
-
-    componentWillUnmount() {
-        const searchElement = document.getElementById('search');
-        if (searchElement) {
-            searchElement.removeEventListener('keyup', this.search);
-            searchElement.removeEventListener('focus', this.showSearchList);
-            window.removeEventListener('click', this.hideSearchList);
         }
     }
 
     render() {
         const searchNavPanel = () => (
             <Fragment>
-                <input id="search" className="" type="text" placeholder="Search"></input>
+                <input
+                    id="search"
+                    className="searchInput"
+                    type="text"
+                    onFocus={this.showSearchList}
+                    onKeyUp={this.search}
+                    ref={(input) => this.searchInput = input}
+                    placeholder="Search">
+                </input>
                 <ul id="searchList" className="searchList">
                     {this.props.searchUser.map((user, index) =>
                         <li key={index}><Link to={`/${user.nick}`}>{user.nick}</Link></li>

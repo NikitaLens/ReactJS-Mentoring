@@ -3,23 +3,8 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import InputForm from '../../components/InputForm';
 import { onLogIn, onSignUp } from "../../actions/userActions";
-
-class Input extends Component {
-    render() {
-        let rf = this.props.rf;
-        return (
-            <div className="input-auth">
-                <div className="label">{this.props.name}</div>
-                <input className="auth"
-                    type="text"
-                    placeholder={this.props.name}
-                    ref={(input) => rf = input}
-                />
-            </div>
-        )
-    }
-}
 
 class LoginPage extends Component {
     componentWillReceiveProps(nextProps) {
@@ -75,17 +60,17 @@ class LoginPage extends Component {
                                 <div className="welcome">Welcome to Instagram</div>
                                 <div className="auth-description">Authorization</div>
                                 <form onSubmit={this.logIn} className="log-in">
-                                    <Input name={'Username'} rf={'this.logUsername'} />
-                                    <Input name={'Password'} rf={'this.logPassword'} />
+                                    <InputForm name={'Username'} inputRef={input => this.logUsername = input} />
+                                    <InputForm name={'Password'} inputRef={input => this.logPassword = input} />
                                     <button>Log In</button>
                                 </form>
                                 <div className="auth-description">Registration</div>
                                 <form onSubmit={this.signUp} className="sing-up">
-                                    <Input name={'Email'} rf={'this.signEmail'} />
-                                    <Input name={'First Name'} rf={'this.signFirstName'} />
-                                    <Input name={'Last Name'} rf={'this.signLastName'} />
-                                    <Input name={'Username'} rf={'this.signUsername'} />
-                                    <Input name={'Password'} rf={'this.signPassword'} />
+                                    <InputForm name={'Email'} inputRef={input => this.signEmail = input} />
+                                    <InputForm name={'First Name'} inputRef={input => this.signFirstName = input} />
+                                    <InputForm name={'Last Name'} inputRef={input => this.signLastName = input} />
+                                    <InputForm name={'Username'} inputRef={input => this.signUsername = input} />
+                                    <InputForm name={'Password'} inputRef={input => this.signPassword = input} />
                                     <button>Sign Up</button>
                                 </form>
                             </div>

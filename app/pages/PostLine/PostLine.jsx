@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import Loader from '../../components/Loader';
 import { addComment, putLike, loadPhotos } from "../../actions/photoActions";
 import Post from "../../components/Post";
 import { loadUsers } from "../../actions/userActions";
@@ -10,20 +11,20 @@ import throttle from "lodash/throttle";
 
 class PostLine extends Component {
     callbackScroll = (event) => {
-        const { dispatch, currentUser, photoStoreInfo }  = this.props;
+        const { dispatch, currentUser, photoStoreInfo } = this.props;
 
         const hasNext = photoStoreInfo.hasNext;
         const clientHeight = document.documentElement.clientHeight;
         const scrollHeight = document.documentElement.scrollHeight;
         const scrollTop = document.documentElement.scrollTop;
-        
+
         if (hasNext && scrollTop !== 0 && scrollHeight - clientHeight - scrollTop < 100) {
             dispatch(loadPhotos(currentUser, photoStoreInfo.photoPage));
         }
     };
-    
+
     update = throttle(this.callbackScroll, 1000, { leading: true, trailing: true });
-    
+
     componentDidMount() {
         this.props.dispatch(loadUsers(this.props.currentUser));
         this.props.dispatch(loadPhotos(this.props.currentUser, this.props.photoStoreInfo.photoPage));
@@ -37,7 +38,7 @@ class PostLine extends Component {
     render() {
         const { photoStoreInfo } = this.props;
         if (photoStoreInfo.photoPage === 1 && photoStoreInfo.fetching) {
-            return (<div className="wrapper"><div className="cssload-loader"></div></div>);
+            return <Loader />
         }
         return (
             <div>
@@ -51,7 +52,7 @@ class PostLine extends Component {
                                 )}
                                 {photoStoreInfo.photoPage !== 1
                                     && photoStoreInfo.fetching
-                                    && (<div className="cssload-wrapper"><div className="cssload-loader"/></div>)
+                                    && <Loader />
                                 }
                             </div>
                         </div>
