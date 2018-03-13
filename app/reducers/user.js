@@ -1,8 +1,7 @@
 import { LOG_IN, SIGN_IN, GET_USERS, TOOGLE_FOLLOW } from "../actions/userActions";
+import cloneDeep from "lodash/cloneDeep";
 
 export default function user(state = [], action) {
-	// console.log(action);
-	// console.log(state);
 	switch (action.type) {
 		case GET_USERS: {
 			return [
@@ -10,8 +9,7 @@ export default function user(state = [], action) {
 			]
 		}
 		case TOOGLE_FOLLOW: {
-			// console.log(action);
-			const new_state = JSON.parse(JSON.stringify(state)).map(function (user) {
+			const new_state = cloneDeep(state).map(function (user) {
 				if (user.id === action.follow.id_user) {
 					// console.log('Успех нашли того кто подписывается', user.id);
 					const idFoller = user.following.indexOf(action.follow.id_follow);

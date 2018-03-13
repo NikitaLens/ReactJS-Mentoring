@@ -7,7 +7,6 @@ import { loadUsersSearch } from "../../actions/userActions";
 
 class Header extends Component {
     callbackSearch = () => {
-        const searchElement = document.getElementById('search');
         this.props.dispatch(loadUsersSearch(this.searchInput.value));
     };
 
