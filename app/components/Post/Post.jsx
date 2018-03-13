@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import { addComment, putLike } from "../../actions/photoActions";
 import CommentsList from '../CommentList';
 import CommentInput from '../CommentInput';
+import './styles.scss';
 
 class Post extends Component {
     clickLike(id_photo) {

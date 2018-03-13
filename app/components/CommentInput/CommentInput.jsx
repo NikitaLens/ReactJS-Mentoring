@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { addNewComment } from "../../actions/photoActions";
+import './styles.scss';
 
 class CommentInput extends Component {
     onAddComment = () => {
