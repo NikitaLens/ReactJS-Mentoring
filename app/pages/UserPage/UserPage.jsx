@@ -3,40 +3,50 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { clickFollow } from "../../actions/userActions";
+import { clickFollow, loadUser } from "../../actions/userActions";
+import { loadOwnerPagePhotos } from "../../actions/photoActions";
 
 class FollowSettingButton extends Component {
-    settings = () => {
-        // console.log('Settings');
-    }
+    // settings = () => {
+    //     // console.log('Settings');
+    // }
 
-    onFollow = () => {
-        this.props.dispatch(clickFollow({ id_user: this.props.currentUser.id, id_follow: this.props.ownerUserPage.id }));
-    }
+    // onFollow = () => {
+    //     this.props.dispatch(clickFollow({ id_user: this.props.currentUser.id, id_follow: this.props.ownerUserPage.id }));
+    // }
 
-    render() {
-        const { ownerUserPage, currentUser } = this.props;
-        const isFollow = ownerUserPage.followers.find(follower => follower === currentUser.id);
+    // render() {
+    //     const { ownerUser, currentUser } = this.props;
+    //     const isFollow = ownerUser.followers.find(follower => follower === currentUser.id);
 
-        const ownerButton = () => (
-            <button onClick={this.settings}>Settings</button>
-        );
+    //     const ownerButton = () => (
+    //         <button onClick={this.settings}>Settings</button>
+    //     );
 
-        const guestButton = () => (
-            (isFollow)
-                ? <button onClick={this.onFollow}>Following</button>
-                : <button onClick={this.onFollow}>Follow</button>
-        );
+    //     const guestButton = () => (
+    //         (isFollow)
+    //             ? <button onClick={this.onFollow}>Following</button>
+    //             : <button onClick={this.onFollow}>Follow</button>
+    //     );
 
-        return (
-            (currentUser.nick === ownerUserPage.nick) ? ownerButton() : guestButton()
-        )
-    }
+    //     return (
+    //         (currentUser.nick === ownerUser.nick) ? ownerButton() : guestButton()
+    //     )
+    // }
 }
 
 class UserPage extends Component {
+    componentDidMount() {
+        this.props.dispatch(loadUser(this.props.ownProps.match.params.nick));
+        this.props.dispatch(loadOwnerPagePhotos(this.props.ownProps.match.params.nick));
+    }
+
     render() {
-        const { ownerUserPage, currentPhoto } = this.props;
+        // console.log('this', this);
+        const { ownerUser, ownerUserPhoto } = this.props;
+        // console.log('ownerUser', ownerUser);
+
+        // console.log('ownerUser.followers', ownerUser.followers.length);
         return (
             <div>
                 <Header />
@@ -45,23 +55,23 @@ class UserPage extends Component {
                         <div className="main-content">
                             <div className="profile">
                                 <div className="photo">
-                                    <img src={ownerUserPage.avatar} alt="avatar" />
+                                    <img src={ownerUser.avatar} alt="avatar" />
                                 </div>
                                 <div className="info">
                                     <div className="info-nick">
-                                        {ownerUserPage.nick}
-                                        <FollowSettingButton {...this.props} />
+                                        {ownerUser.nick}
+                                        {/* <FollowSettingButton {...this.props} /> */}
                                     </div>
                                     <div className="info-count">
-                                        <div className="post-count"><b>{currentPhoto.length}</b>&nbsp;posts</div>
-                                        <div className="followers-count"><b>{ownerUserPage.followers.length}</b>&nbsp;followers</div>
-                                        <div className="follow-count"><b>{ownerUserPage.following.length}</b>&nbsp;following</div>
+                                        <div className="post-count"><b>{ownerUserPhoto.length}</b>&nbsp;posts</div>
+                                        {/* <div className="followers-count"><b>{ownerUser.followers.length}</b>&nbsp;followers</div> */}
+                                        {/* <div className="follow-count"><b>{ownerUser.following.length}</b>&nbsp;following</div> */}
                                     </div>
-                                    <div className="info-fullname">{ownerUserPage.firstName + ' ' + ownerUserPage.lastName}</div>
+                                    <div className="info-fullname">{ownerUser.firstName + ' ' + ownerUser.lastName}</div>
                                 </div>
                             </div>
                             <div className="photo-album">
-                                {currentPhoto.map((photo, index) =>
+                                {ownerUserPhoto.map((photo, index) =>
                                     <div className="photo" key={index}>
                                         <img src={photo.src} alt={photo.id} />
                                     </div>
@@ -77,22 +87,10 @@ class UserPage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const ownerUserPage = state.user.find(user => {
-        return user.nick === ownProps.match.params.nick
-    });
-
-    const currentPhoto = state.photo.reduce((currentPhoto, photo) => {
-        if (photo.userId === ownerUserPage.id) {
-            currentPhoto.push(photo);
-        } return currentPhoto;
-    }, []);
-
     return {
         currentUser: state.currentUser,
-        userStore: state.user,
-        photoStore: state.photo,
-        ownerUserPage,
-        currentPhoto,
+        ownerUser: state.ownerUser,
+        ownerUserPhoto: state.ownerUserPhoto,
         ownProps
     };
 }

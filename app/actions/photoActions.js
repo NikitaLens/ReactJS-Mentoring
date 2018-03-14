@@ -2,13 +2,20 @@ import { fetchApi, fetchGet, fetchPost, fetchPut } from '../api/fetchApi';
 import { baseUrl } from '../config.json';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const TOOGLE_LIKE = 'TOOGLE_LIKE';
-export const PUT_PHOTO = 'PUT_PHOTO';
-export const UPDATE_PHOTO = 'UPDATE_PHOTO';
 export const GET_COMMENT = 'GET_COMMENT';
+export const PUT_PHOTO = 'PUT_PHOTO';
+export const PUT_PHOTO_OWNER = 'PUT_OWNER_PHOTO';
+export const UPDATE_PHOTO = 'UPDATE_PHOTO';
+export const UPDATE_PHOTO_OWNER = 'UPDATE_PHOTO_OWNER';
 export const FETCHING = 'FETCHING';
+export const FETCHING_OWNER = 'FETCHING_OWNER';
 
 const fetching = {
     type: FETCHING
+};
+
+const fetchingOwner = {
+    type: FETCHING_OWNER
 };
 
 const putPhoto = photos => ({
@@ -16,8 +23,18 @@ const putPhoto = photos => ({
     photos
 });
 
+const putPhotoOwner = photos => ({
+    type: PUT_PHOTO_OWNER,
+    photos
+});
+
 const updatePhotoStoreInfo = update => ({
     type: UPDATE_PHOTO,
+    update
+});
+
+const updateOwnerPhotoInfo = update => ({
+    type: UPDATE_PHOTO_OWNER,
     update
 });
 
@@ -49,6 +66,21 @@ export const loadPhotos = (currentUser, page) => async dispatch => {
         }));
         dispatch(putPhoto(updPhotos));
         dispatch(updatePhotoStoreInfo({ photoPage: ++page, hasNext: photo.hasNext }));
+    } catch (error) {
+        console.error('Request failed', error);
+    }
+};
+
+export const loadOwnerPagePhotos = (user) => async dispatch => {
+    try {
+        const userResp = await fetchGet(`${baseUrl}/api/user/${user}`);
+        const photo = await fetchGet(`${baseUrl}/api/photos?users=${userResp.id}&page=${1}`);
+        const updPhotos = await Promise.all(photo.photos.map(async photo => {
+            const data = await fetchGet(`${baseUrl}/api/photo/${photo.id}/comments/1`);
+            photo.comments = data.comments;
+            return photo;
+        }));
+        dispatch(putPhotoOwner(updPhotos));
     } catch (error) {
         console.error('Request failed', error);
     }

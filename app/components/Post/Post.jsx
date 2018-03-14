@@ -15,15 +15,14 @@ class Post extends Component {
 
     render() {
         const { photo } = this.props;
-        const postUser = this.props.userStore.find(user => user.id === photo.userId);
         const userPostLike = photo.likes.find(like => like === this.props.currentUser.id);
 
         return (
             <div className="photo">
-                <Link to={`/${postUser.nick}`}>
+                <Link to={`/${photo.user_id.nick}`}>
                     <div className="photo-autor">
-                        <img src={postUser.avatar} alt={photo.alt} />
-                        <div className="nick-autor">{postUser.nick}</div>
+                        <img src={photo.user_id.avatar} alt={photo.alt} />
+                        <div className="nick-autor">{photo.user_id.nick}</div>
                     </div>
                 </Link>
                 <img src={photo.src} alt={photo.alt} />
@@ -50,8 +49,7 @@ class Post extends Component {
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser,
-        userStore: state.user
+        currentUser: state.currentUser
     };
 }
 

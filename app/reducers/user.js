@@ -1,13 +1,8 @@
-import { LOG_IN, SIGN_IN, GET_USERS, TOOGLE_FOLLOW } from "../actions/userActions";
+import { LOG_IN, SIGN_IN, TOOGLE_FOLLOW } from "../actions/userActions";
 import cloneDeep from "lodash/cloneDeep";
 
 export default function user(state = [], action) {
 	switch (action.type) {
-		case GET_USERS: {
-			return [
-				...action.users
-			]
-		}
 		case TOOGLE_FOLLOW: {
 			const new_state = cloneDeep(state).map(function (user) {
 				if (user.id === action.follow.id_user) {

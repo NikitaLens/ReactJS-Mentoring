@@ -4,14 +4,20 @@ import photo from './photo';
 import user from './user';
 import searchUser from './searchUser';
 import currentUser from './currentUser';
+import ownerUser from './ownerUser';
+import ownerUserPhoto from './ownerUserPhoto';
+import ownerUserPhotoInfo from './ownerUserPhotoInfo';
 import photoStoreInfo from './photoStoreInfo';
 
 export default combineReducers({
     router: routerReducer,
-    currentUser: currentUser,
-    photoStoreInfo: photoStoreInfo,
-    user,
+    currentUser,
     searchUser,
-    photo
+    ownerUser,
+    ownerUserPhoto,
+    ownerUserPhotoInfo,
+    photo,
+    photoStoreInfo: photoStoreInfo,
+    user
 })
 

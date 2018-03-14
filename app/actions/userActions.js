@@ -2,7 +2,7 @@ import { fetchApi, fetchGet, fetchPost, fetchPut } from '../api/fetchApi';
 import { baseUrl } from '../config.json';
 export const LOG_IN = 'LOG_IN';
 export const SIGN_IN = 'SIGN_IN';
-export const GET_USERS = 'GET_USERS';
+export const GET_USER = 'GET_USER';
 export const GET_USERS_SEARCH = 'GET_USERS_SEARCH';
 export const TOOGLE_FOLLOW = 'TOOGLE_FOLLOW';
 
@@ -16,9 +16,9 @@ export const signUp = user => ({
     user
 });
 
-export const getUsers = users => ({
-    type: GET_USERS,
-    users
+export const getUser = user => ({
+    type: GET_USER,
+    user
 });
 
 export const getUsersSearch = users => ({
@@ -68,11 +68,10 @@ export const onSignUp = user => async dispatch => {
     }
 };
 
-export const loadUsers = (currentUser, page) => async dispatch => {
+export const loadUser = (user) => async dispatch => {
     try {
-        const users = [currentUser.id, ...currentUser.following];
-        const following = await fetchGet(`${baseUrl}/api/user/${currentUser.id}/following`);
-        dispatch(getUsers([currentUser, ...following]));
+        const userResp = await fetchGet(`${baseUrl}/api/user/${user}`);
+        dispatch(getUser(userResp));
     } catch (error) {
         console.error('Request failed', error);
     }
