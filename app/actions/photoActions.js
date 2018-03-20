@@ -71,8 +71,9 @@ export const loadPhotos = (currentUser, page) => async dispatch => {
     }
 };
 
-export const loadOwnerPagePhotos = (user) => async dispatch => {
+export const loadOwnerPagePhotos = (user, page) => async dispatch => {
     try {
+        dispatch(fetchingOwner);
         const userResp = await fetchGet(`${baseUrl}/api/user/${user}`);
         const photo = await fetchGet(`${baseUrl}/api/photos?users=${userResp.id}&page=${1}`);
         const updPhotos = await Promise.all(photo.photos.map(async photo => {
@@ -81,6 +82,7 @@ export const loadOwnerPagePhotos = (user) => async dispatch => {
             return photo;
         }));
         dispatch(putPhotoOwner(updPhotos));
+        dispatch(updateOwnerPhotoInfo({ photoPage: ++page, hasNext: photo.hasNext }));
     } catch (error) {
         console.error('Request failed', error);
     }
