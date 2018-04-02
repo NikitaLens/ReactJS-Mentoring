@@ -1,0 +1,39 @@
+import { ADD_COMMENT, TOOGLE_LIKE, PUT_PHOTO } from '../actions/photoActions';
+import cloneDeep from "lodash/cloneDeep";
+
+export default function photo(state = [], action) {
+	switch (action.type) {
+		case PUT_PHOTO: {
+			return [
+				...state,
+				...action.photos
+			];
+		}
+		case TOOGLE_LIKE: {
+			const new_state = cloneDeep(state).map(function (photo) {
+				if (photo.id === action.like.id_photo) {
+					const idDel = photo.likes.indexOf(action.like.id_user);
+					if (idDel !== -1) {
+						photo.likes.splice(idDel, 1);
+					} else {
+						photo.likes.push(action.like.id_user);
+					}
+				}
+				return photo;
+			});
+			return new_state;
+		}
+		case ADD_COMMENT: {
+			const new_state = cloneDeep(state).map(function (photo) {
+				if (photo.id === action.comment.photo_id) {
+					photo.comments.push(action.comment);
+				}
+				return photo;
+			});
+			return new_state;
+		}
+		default: {
+			return state;
+		}
+	}
+}

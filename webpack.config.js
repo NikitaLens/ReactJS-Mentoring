@@ -1,22 +1,44 @@
-let config = {
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const config = {
     devtool: 'eval-source-map',
-    entry: './index.js',
+    entry: [
+        'babel-polyfill',
+        'webpack-dev-server/client?http://localhost:8080',
+        'webpack/hot/dev-server',
+        'react-hot-loader/patch',
+        path.join(__dirname, 'app/index.js')
+    ],
     output: {
-        path: '/',
-        filename: 'index.js',
+        path: path.join(__dirname, '/dist/'),
+        filename: '[name].js',
+        publicPath: '/'
     },
-    devServer: {
-        inline: true,
-        port: 8080,
-        historyApiFallback: true
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            inject: 'body',
+            filename: 'index.html'
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development')
+        })
+    ],
+    resolve: {
+        extensions: ['.js', '.jsx']
     },
     module: {
         rules: [
             {
-                enforce: "pre",
-                test: /\.js$/,
+                enforce: 'pre',
+                test: /\.js[x]$/,
                 exclude: /node_modules/,
-                loader: "eslint-loader",
+                loader: 'eslint-loader',
                 options: {
                     configFile: '.eslintrc',
                     failOnWarning: false,
@@ -24,17 +46,9 @@ let config = {
                 }
             },
             {
-                test: /\.js$/,
+                test: /\.js[x]?$/,
                 exclude: /node_modules/,
-                loader: "babel-loader",
-            },
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015', 'react']
-                }
+                loader: 'babel-loader'
             },
             {
                 test: /\.css$/,
@@ -50,8 +64,23 @@ let config = {
                     'css-loader',
                     'less-loader'
                 ]
-            }
+            },
+            {
+                test: /\.(s*)css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                loader: 'file-loader'
+            },
+            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff' },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' },
         ]
     }
-}
+};
+
 module.exports = config;

@@ -1,0 +1,28 @@
+.footer {
+	background-color: #fafafa;	
+	border-top: 1px solid rgba(0,0,0,.0975);
+
+	.footer-wrapper {
+		display: flex;
+		max-width: 935px;
+		margin: 0 auto;
+		padding: 0 60px;
+		flex-direction: column;
+	
+		.footer-content {
+			display: flex;
+			justify-content: space-between;
+			padding: 15px 10px;
+
+			nav {
+				display: flex;
+				align-items: baseline;
+
+				a {
+					padding-right: 20px;
+					color: black;
+				}
+			}
+		}
+	}
+}

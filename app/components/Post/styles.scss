@@ -1,0 +1,56 @@
+// .photo {
+// 	border: 1px solid rgba(197, 197, 197, 0.301);
+// 	background-color: #fff;
+// 	border-radius: 5px;
+// 	display: flex;
+// 	flex-direction: column;	
+// 	padding-bottom: 15px;
+// 	margin: 20px 0px;
+
+// 	a > .photo-autor {
+// 		color: black;
+// 		text-decoration: none;
+// 	}
+
+// 	.photo-autor {
+// 		display: flex;
+// 		align-items: center;	
+// 		padding: 15px 15px;
+
+// 		img {
+// 			object-fit: cover;
+// 			border-radius: 50%;
+// 			width: 40px;
+// 			height: 40px;	
+// 		}	
+		
+// 		.nick-autor {
+// 			margin-left: 15px;
+// 			font-size: 20px;
+// 			font-weight: 600;
+// 			text-decoration: none;
+// 		}
+// 	}
+
+// 	img {						
+// 		object-fit: cover;	
+// 		height: 100%;						
+// 		width: 100%;
+// 	}
+
+// 	.photo-like {
+// 		display: flex;
+// 		padding: 15px 15px 10px 15px;
+// 		align-items: center;
+// 		cursor: pointer;
+		
+// 		.fa-heart {
+// 			color: red;
+// 			font-size: 24px;
+// 		}
+
+// 		.like-count {
+// 			margin-left: 5px;
+// 		}
+// 	}
+// }

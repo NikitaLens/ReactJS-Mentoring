@@ -1,0 +1,21 @@
+.input-comment {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(0,0,0,.0975);				
+    margin: 10px 15px 0 15px;
+    padding-left: 10px;
+
+    input {
+        flex: 20;				
+        display: flex;
+        border: none;
+        flex-direction: row;	
+        background: transparent;
+        outline: none;
+    }	
+
+    .add-button {
+        flex: 1;
+        display: flex;
+    }
+}

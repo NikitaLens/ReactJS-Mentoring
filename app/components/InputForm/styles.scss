@@ -1,0 +1,19 @@
+.input-auth {
+	input {
+		display: flex;
+		border: 1px solid rgba(0,0,0,.0975);				
+		border-radius: 7px;
+		flex-direction: row;
+		width: 100%;
+		max-width: 250px;
+		background: transparent;
+		outline: none;
+		text-align: center;
+		margin-bottom: 10px;
+		
+		&:focus {
+			background-color: rgba(197, 197, 197, 0.301);
+			border: 1px solid rgba(0, 0, 0, 0.397);
+		}
+	}
+}				
