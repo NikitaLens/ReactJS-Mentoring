@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "users_id",
+    "sequence_value": 6
+  },
+  {
+    "_id": "comments_id",
+    "sequence_value": 10
+  },
+  {
+    "_id": "photos_id",
+    "sequence_value": 12
+  }
+]

@@ -1,0 +1,6 @@
+definitions:
+  UserResponse:
+    allOf:
+      - $ref: '#/definitions/Id'
+      - $ref: '#/definitions/User'
+

@@ -1,0 +1,9 @@
+definitions:
+  Id:
+    type: object
+    properties:
+      _id:
+        type: string
+      id:
+        type: integer
+

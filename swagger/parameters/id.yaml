@@ -1,0 +1,57 @@
+parameters:
+  id:
+    name: id
+    description: Entity id
+    in: path
+    required: true
+    type: integer
+  idOrNick:
+    name: idOrNick
+    description: User nick or id
+    in: path
+    required: true
+    type: string
+  page:
+    name: page
+    description: Number of page
+    in: path
+    required: true
+    type: integer
+  userId:
+    name: userId
+    description: User id
+    in: path
+    required: true
+    type: integer
+  photoId:
+    name: photoId
+    description: Photo id
+    in: path
+    required: true
+    type: integer
+  followerId:
+    name: followerId
+    description: Id of user that will follow
+    in: path
+    required: true
+    type: integer
+  search:
+    name: q
+    description: Search data
+    in: query
+    required: true
+    type: string
+  usersQuery:
+    name: users
+    description: Search user id's
+    in: query
+    required: true
+    type: array
+    items:
+      type: integer
+  pageQuery:
+    name: page
+    description: Page number
+    in: query
+    required: true
+    type: integer

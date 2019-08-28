@@ -1,0 +1,12 @@
+definitions:
+  SuccessResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: Message
+  SaveResponse:
+    type: object
+    properties:
+      id:
+       type: number
